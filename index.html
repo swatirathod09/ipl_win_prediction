@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IPL Win Probability Predictor</title>
+<meta name="description" content="Estimate the batting team's chance of winning a second-innings chase in the IPL, using a model trained on historical IPL deliveries.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <span class="mode" id="mode">Built-in model</span>
+    <h1>IPL Win Probability Predictor</h1>
+    <p>Enter the state of a second-innings chase to estimate the batting team’s chance of winning. The model is trained on historical IPL deliveries.</p>
+  </header>
+
+  <main class="grid">
+    <section class="panel" aria-labelledby="h-setup">
+      <div class="ph">
+        <div><p class="eyebrow">MATCH SETUP</p><h2 id="h-setup">Current match situation</h2></div>
+        <span class="chip">01 / INPUTS</span>
+      </div>
+
+      <form id="form" novalidate>
+        <div class="teams">
+          <div class="f"><label for="bat">Batting team <b aria-hidden="true">*</b></label><select id="bat" required></select></div>
+          <span class="vs" aria-hidden="true">VS</span>
+          <div class="f"><label for="bowl">Bowling team <b aria-hidden="true">*</b></label><select id="bowl" required></select></div>
+        </div>
+
+        <div class="f"><label for="venue">Venue <b aria-hidden="true">*</b></label><select id="venue" required></select></div>
+
+        <div class="two">
+          <div class="f"><label for="score">Current score <b aria-hidden="true">*</b></label>
+            <div class="inp"><input id="score" type="text" inputmode="numeric" autocomplete="off" required><span>RUNS</span></div></div>
+          <div class="f"><label for="wk">Wickets lost <b aria-hidden="true">*</b></label>
+            <div class="inp"><input id="wk" type="text" inputmode="numeric" autocomplete="off" required><span>/ 10</span></div></div>
+          <div class="f"><label for="overs">Overs completed <b aria-hidden="true">*</b></label>
+            <div class="inp"><input id="overs" type="text" inputmode="decimal" autocomplete="off" required aria-describedby="oh"><span>OVERS</span></div></div>
+          <div class="f"><label for="target">Target score <b aria-hidden="true">*</b></label>
+            <div class="inp"><input id="target" type="text" inputmode="numeric" autocomplete="off" required><span>RUNS</span></div></div>
+        </div>
+        <p class="hint" id="oh">Cricket notation: 14.3 = 14 overs and 3 balls.</p>
+
+        <div class="actions">
+          <button class="go" id="go" type="submit"><span>Predict win probability</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+          <button class="reset" id="reset" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>Reset</button>
+        </div>
+        <p class="err" id="err" role="alert"></p>
+        <p class="note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>Prediction is based on historical data and is an estimate, not a guarantee.</p>
+      </form>
+    </section>
+
+    <section class="panel out" aria-labelledby="h-out">
+      <p class="eyebrow lime">MODEL OUTPUT</p>
+      <h2 id="h-out">Chase outlook</h2>
+      <div aria-live="polite">
+        <p class="team" id="o-team">Waiting for inputs</p>
+        <p class="pct"><span id="o-pct">--.-</span><i>%</i></p>
+        <p class="cap">ESTIMATED WIN PROBABILITY</p>
+        <div class="gauge" role="img" aria-label="Win probability gauge"><div class="fill" id="o-fill"></div></div>
+        <div class="ends"><span>0% CHALLENGING</span><span>100% FAVOURED</span></div>
+        <div class="sit">
+          <h3>Match situation</h3>
+          <p id="o-msg">Fill in the match situation and press Predict win probability.</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><span>RUNS REMAINING</span><b id="s-runs">–</b></div>
+          <div class="stat"><span>BALLS REMAINING</span><b id="s-balls">–</b></div>
+          <div class="stat"><span>CURRENT RUN RATE</span><b id="s-crr">–</b></div>
+          <div class="stat"><span>REQUIRED RUN RATE</span><b id="s-rrr">–</b></div>
+        </div>
+      </div>
+      <p class="note">Only the batting team’s probability is displayed.</p>
+    </section>
+  </main>
+  <footer class="foot" id="foot"></footer>
+</div>
+<script src="js/model.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

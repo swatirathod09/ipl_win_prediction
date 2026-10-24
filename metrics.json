@@ -1,0 +1,53 @@
+{
+  "matches": 623,
+  "situations": 72340,
+  "test_matches": 125,
+  "models": {
+    "Logistic Regression": {
+      "accuracy": 0.7931,
+      "log_loss": 0.4279,
+      "brier": 0.1397,
+      "roc_auc": 0.8822
+    },
+    "Random Forest": {
+      "accuracy": 0.7507,
+      "log_loss": 0.476,
+      "brier": 0.1601,
+      "roc_auc": 0.8467
+    }
+  },
+  "chosen": "Logistic Regression",
+  "cv_accuracy": 0.7672,
+  "by_stage": {
+    "overs 0-6": 0.7431,
+    "overs 6-15": 0.8057,
+    "overs 15-20": 0.8429
+  },
+  "calibration": [
+    {
+      "predicted": 0.066,
+      "actual": 0.083,
+      "n": 3931
+    },
+    {
+      "predicted": 0.302,
+      "actual": 0.341,
+      "n": 1977
+    },
+    {
+      "predicted": 0.499,
+      "actual": 0.487,
+      "n": 2074
+    },
+    {
+      "predicted": 0.704,
+      "actual": 0.704,
+      "n": 2277
+    },
+    {
+      "predicted": 0.924,
+      "actual": 0.914,
+      "n": 4356
+    }
+  ]
+}
